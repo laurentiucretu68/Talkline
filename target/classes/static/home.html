@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Talkline - Home</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/4dfecf183c.js" crossorigin="anonymous"></script>
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+
+</head>
+<body class="body-profile" style="overflow-x: hidden">
+
+<section class="navigation">
+    <div class="nav-container">
+
+        <div class="brand">
+            <a href="">Talkline</a>
+        </div>
+
+        <form class="navbar-search" action="/results">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search" name="search">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit" style="border: 1px solid white !important;">
+                        <i class="glyphicon glyphicon-search" style="color: white !important;"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <nav>
+            <div class="nav-mobile">
+                <a id="nav-toggle" href="#"><span></span></a>
+            </div>
+
+            <ul class="nav-list">
+                <li><a href="/profile"><i class="fa-solid fa-home"></i> My Profile</a></li>
+                <li><a href="/requests"><i class="fa-solid fa-circle-plus"></i> Friend Requests</a></li>
+                <li><a href="/messages"><i class="fa-solid fa-envelope"></i> Messages</a></li>
+                <li><a href="/notifications"><i class="fa-solid fa-bell"></i> Notifications</a></li>
+                <li>
+                    <a href="#">
+                        <img th:src="@{${user_home.profilePicture}}" class="navbar-profile-img">
+                        <span th:text="${user_home.email}"></span>
+                    </a>
+                    <ul class="nav-dropdown">
+                        <li><a href="/settings">Settings</a></li>
+                        <li><a href="/sign-in">Sign out</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</section>
+
+
+<div class="container">
+    <div class="main-body"  style="margin-top: 7%">
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <img th:src="@{${user_home.profilePicture}}" alt="Admin" class="rounded-circle" width="150">
+                            <div class="mt-3">
+                                <h4 th:text="${user_home.getFullName()}"></h4>
+                                <p class="text-muted font-size-sm" th:text="${user_home.getCustomLocation()}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 5%; padding-bottom: 0 !important;">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <ul class="list-group">
+                                <li class="list-group-item text-left" th:each="user: ${friendRequests}">
+                                    <a th:href="@{/profile/{email}(email=${user.email})}">
+                                        <img class="img-thumbnail" th:src="@{${user.profilePicture}}">
+
+                                        <label class="name" th:text="${user.getFullName()}">
+                                        </label>
+                                    </a>
+
+                                    <label class="pull-right">
+<!--                                        <a href="" class="friend-request"><i class="fa-solid fa-plus" th:action="/send_friend_request"></i></a>-->
+                                    </label>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8 mb-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <h2>Post</h2>
+                            <form action="#" class="panel-activity__status">
+                                <textarea style="resize: none;" name="user_activity" placeholder="Share what you've been up to..." class="form-control"></textarea>
+                                <div class="actions">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn-link" title="" data-toggle="tooltip" data-original-title="Post an Image">
+                                            <i class="fa fa-image"></i>
+                                        </button>
+                                    </div>
+                                    <button type="submit" class="btn btn-sm btn-rounded btn-info">
+                                        Post
+                                    </button>
+                                </div>
+                            </form>
+
+                            <div class="card card-01">
+                                <div class="d-flex justify-content-start" >
+                                    <div class="d-flex flex-row align-items-center"  style="display: flex">
+                                        <img src="img/avatar7.png" width="50" class="rounded-circle-01">
+                                        <div style="margin-left: 3%">
+                                            <div class="d-flex flex-column ml-2" style="font-size: 15px">
+                                                <span class="font-weight-bold">Laurentiu Cretu
+                                                </span>
+                                            </div>
+                                            <div class="d-flex flex-row mt-1 ellipsis">
+                                                <small class="mr-2">20 mins</small> <i class="fa fa-ellipsis-h"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <p class="text-justify" style="margin-top: 10px; font-size: 17px">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
+                                </p>
+
+                                <img src="img/land1.jpg" class="img-fluid">
+
+                                <div class="p-2">
+                                    <hr>
+                                    <div class="d-flex justify-content-between align-items-center" style="display: flex">
+                                        <div class="d-flex flex-row icons d-flex align-items-center"> <i class="fa fa-heart"></i>
+                                        </div>
+                                        <div class="d-flex flex-row muted-color" style="margin-left: 20px; margin-top: 5px">
+                                            <span>2 comments</span>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="comments">
+                                        <div class="d-flex flex-row mb-2" style="display: flex; margin-top: 20px">
+                                            <img src="img/blank_profile.png" width="40" class="rounded-image">
+                                            <div class="d-flex flex-column ml-2" style="margin-left: 2%">
+                                                <span class="name">Stefan Cucu</span> <br>
+                                                <small class="comment-text">Great job</small>
+                                                <div class="d-flex flex-row align-items-center status">
+                                                    <small>Delete</small>
+                                                    <small>18 mins</small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex flex-row mb-2" style="display: flex; margin-top: 20px">
+                                            <img src="img/blank_profile.png" width="40" class="rounded-image">
+                                            <div class="d-flex flex-column ml-2" style="margin-left: 2%">
+                                                <span class="name">Boroianu Andrei</span> <br>
+                                                <small class="comment-text">gg</small>
+                                                <div class="d-flex flex-row align-items-center status">
+                                                    <small>Delete</small>
+                                                    <small>18 mins</small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="comment-input" style="display: flex;  margin-top: 20px">
+                                            <input type="text" class="form-control" style="border-radius: 20px;">
+                                            <button class="btn btn-outline-primary" style="border-radius: 10px; margin-left: 10px">Comment</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card card-01">
+                                <div class="d-flex justify-content-start" >
+                                    <div class="d-flex flex-row align-items-center"  style="display: flex">
+                                        <img src="img/avatar7.png" width="50" class="rounded-circle-01">
+                                        <div style="margin-left: 3%">
+                                            <div class="d-flex flex-column ml-2" style="font-size: 15px">
+                                                <span class="font-weight-bold">Laurentiu Cretu</span>
+                                            </div>
+                                            <div class="d-flex flex-row mt-1 ellipsis">
+                                                <small class="mr-2">20 mins</small> <i class="fa fa-ellipsis-h"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <p class="text-justify" style="margin-top: 10px; font-size: 17px">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
+                                </p>
+
+                                <img src="img/land2.jpg" class="img-fluid">
+
+                                <div class="p-2">
+                                    <hr>
+                                    <div class="d-flex justify-content-between align-items-center" style="display: flex">
+                                        <div class="d-flex flex-row icons d-flex align-items-center"> <i class="fa fa-heart"></i>
+                                        </div>
+                                        <div class="d-flex flex-row muted-color" style="margin-left: 20px; margin-top: 5px">
+                                            <span>2 comments</span>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="comments">
+                                        <div class="d-flex flex-row mb-2" style="display: flex; margin-top: 20px">
+                                            <img src="img/blank_profile.png" width="40" class="rounded-image">
+                                            <div class="d-flex flex-column ml-2" style="margin-left: 2%">
+                                                <span class="name">Ion Ionesccu</span> <br>
+                                                <small class="comment-text">Nice pic</small>
+                                                <div class="d-flex flex-row align-items-center status">
+                                                    <small>Delete</small>
+                                                    <small>18 mins</small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex flex-row mb-2" style="display: flex; margin-top: 20px">
+                                            <img src="img/blank_profile.png" width="40" class="rounded-image">
+                                            <div class="d-flex flex-column ml-2" style="margin-left: 2%">
+                                                <span class="name">Andrei Popescu</span> <br>
+                                                <small class="comment-text">I like this</small>
+                                                <div class="d-flex flex-row align-items-center status">
+                                                    <small>Delete</small>
+                                                    <small>18 mins</small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="comment-input" style="display: flex;  margin-top: 20px">
+                                            <input type="text" class="form-control" style="border-radius: 20px;">
+                                            <button class="btn btn-outline-primary" style="border-radius: 10px; margin-left: 10px">Comment</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+</body>
+<script src="js/main.js"></script>
+
+</html>

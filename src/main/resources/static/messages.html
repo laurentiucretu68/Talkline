@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Talkline - Messages</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/4dfecf183c.js" crossorigin="anonymous"></script>
+
+</head>
+<body class="body-profile">
+
+
+
+<section class="navigation">
+    <div class="nav-container">
+
+        <div class="brand">
+            <a href="/home">Talkline</a>
+        </div>
+
+        <form class="navbar-search" action="/results">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search" name="search">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit" style="border: 1px solid white !important;">
+                        <i class="glyphicon glyphicon-search" style="color: white !important;"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <nav>
+            <div class="nav-mobile">
+                <a id="nav-toggle" href="#"><span></span></a>
+            </div>
+
+            <ul class="nav-list">
+                <li><a href="/profile"><i class="fa-solid fa-home"></i> My Profile</a></li>
+                <li><a href="/requests"><i class="fa-solid fa-circle-plus"></i> Friend Requests</a></li>
+                <li><a href="/messages"><i class="fa-solid fa-envelope"></i> Messages</a></li>
+                <li><a href="/notifications"><i class="fa-solid fa-bell"></i> Notifications</a></li>
+                <li>
+                    <a href="#">
+                        <img src="img/avatar7.png" class="navbar-profile-img">
+                        Laurentiu Cretu
+                    </a>
+                    <ul class="nav-dropdown">
+                        <li><a href="/settings">Settings</a></li>
+                        <li><a href="/sign-in">Sign out</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</section>
+
+
+<div class="container">
+    <div class="row clearfix" style="margin-top: 10%">
+        <div class="col-lg-12">
+            <div class="card chat-app">
+                <div id="plist" class="people-list">
+                    <div class="input-group" style="display: flex">
+                        <div class="btn">
+                            <span class="input-group-text"><i class="fa fa-search"></i></span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Search...">
+                    </div>
+                    <ul class="list-unstyled chat-list mt-2 mb-0"  style="margin-top: 5%">
+                        <li class="clearfix">
+                            <img src="img/blank_profile.png" alt="avatar">
+                            <div class="about">
+                                <div class="name">Andrei Popescu</div>
+                                <div class="status"> <i class="fa fa-circle offline"></i> left 7 mins ago </div>
+                            </div>
+                        </li>
+                        <li class="clearfix active">
+                            <img src="img/blank_profile.png" alt="avatar">
+                            <div class="about">
+                                <div class="name">Stefan Tudose</div>
+                                <div class="status"> <i class="fa fa-circle online"></i> online </div>
+                            </div>
+                        </li>
+                        <li class="clearfix">
+                            <img src="img/blank_profile.png" alt="avatar">
+                            <div class="about">
+                                <div class="name">Cezar Andrei</div>
+                                <div class="status"> <i class="fa fa-circle online"></i> online </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="chat">
+                    <div class="chat-header clearfix">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
+                                    <img src="img/blank_profile.png" alt="avatar">
+                                </a>
+                                <div class="chat-about">
+                                    <h6 class="m-b-0">Stefan Tudose</h6>
+                                    <small>Last seen: 2 hours ago</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chat-history">
+                        <ul class="m-b-0">
+                            <li class="clearfix">
+                                <div class="message-data text-right">
+                                    <span class="message-data-time">10:10 AM, Today</span>
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
+                                </div>
+                                <div class="message other-message float-right"> Hi Aiden, how are you? How is the project coming along? </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="message-data">
+                                    <span class="message-data-time">10:12 AM, Today</span>
+                                </div>
+                                <div class="message my-message">Are we meeting today?</div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="message-data">
+                                    <span class="message-data-time">10:15 AM, Today</span>
+                                </div>
+                                <div class="message my-message">Project has been already finished and I have results to show you.</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <hr>
+                    <div class="chat-message clearfix">
+                        <div class="input-group mb-0"  style="display: flex">
+                            <input type="text" class="form-control" placeholder="Enter text here..." style="height: 50px">
+                            <div class="btn">
+                                <span class="input-group-text"><i class="fa fa-send" style="margin-top: 10px"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/main.js"></script>
+</html>

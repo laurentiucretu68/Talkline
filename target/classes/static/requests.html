@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Talkline - Friend Requests</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/4dfecf183c.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="body-profile" style="overflow-x: hidden">
+
+<section class="navigation">
+    <div class="nav-container">
+
+        <div class="brand">
+            <a href="/home">Talkline</a>
+        </div>
+
+        <form class="navbar-search" action="/results">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search" name="search">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit" style="border: 1px solid white !important;">
+                        <i class="glyphicon glyphicon-search" style="color: white !important;"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <nav>
+            <div class="nav-mobile">
+                <a id="nav-toggle" href="#"><span></span></a>
+            </div>
+
+            <ul class="nav-list">
+                <li><a href="/profile"><i class="fa-solid fa-home"></i> My Profile</a></li>
+                <li><a href="/requests"><i class="fa-solid fa-circle-plus"></i> Friend Requests</a></li>
+                <li><a href="/messages"><i class="fa-solid fa-envelope"></i> Messages</a></li>
+                <li><a href="/notifications"><i class="fa-solid fa-bell"></i> Notifications</a></li>
+                <li>
+                    <a href="#">
+                        <img src="img/avatar7.png" class="navbar-profile-img">
+                        Laurentiu Cretu
+                    </a>
+                    <ul class="nav-dropdown">
+                        <li><a href="/settings">Settings</a></li>
+                        <li><a href="/sign-in">Sign out</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</section>
+
+<div class="container" style="margin-bottom: 5%;">
+    <div class="row gutters" style="margin-top: 10%">
+        <div class="header">
+            <h3 class="text-muted prj-name">
+                Friend requests
+            </h3>
+        </div>
+
+
+        <div class="jumbotron list-content">
+            <ul class="list-group">
+
+                <li href="#" class="list-group-item text-left">
+                    <a href="profile.html">
+                        <img class="img-thumbnail" src="https://bootdey.com/img/Content/User_for_snippets.png">
+                        <label class="name" style="margin-left: 5%">
+                                Juan guillermo cuadrado<br>
+                        </label>
+                    </a>
+                    <label class="pull-right">
+                        <a  class="btn btn-xs requests-btn" href="#" title="View">
+                            <i class="fa-solid fa-check"></i>
+                        </a>
+                        <a  class="btn btn-xs requests-btn" href="#" title="Delete">
+                            <i class="fa-solid fa-x"></i>
+                        </a>
+                    </label>
+                    <div class="break"></div>
+                </li>
+                <li href="#" class="list-group-item text-left">
+                    <a href="profile.html">
+                        <img class="img-thumbnail" src="https://bootdey.com/img/Content/User_for_snippets.png">
+                        <label class="name" style="margin-left: 5%">
+                            Juan guillermo cuadrado<br>
+                        </label>
+                    </a>
+                    <label class="pull-right">
+                        <a  class="btn btn-xs requests-btn" href="#" title="View">
+                            <i class="fa-solid fa-check"></i>
+                        </a>
+                        <a  class="btn btn-xs requests-btn" href="#" title="Delete">
+                            <i class="fa-solid fa-x"></i>
+                        </a>
+                    </label>
+                    <div class="break"></div>
+                </li>
+                <li href="#" class="list-group-item text-left">
+                    <a href="profile.html">
+                        <img class="img-thumbnail" src="https://bootdey.com/img/Content/User_for_snippets.png">
+                        <label class="name" style="margin-left: 5%">
+                            Juan guillermo cuadrado<br>
+                        </label>
+                    </a>
+                    <label class="pull-right">
+                        <a  class="btn btn-xs requests-btn" href="#" title="View">
+                            <i class="fa-solid fa-check"></i>
+                        </a>
+                        <a  class="btn btn-xs requests-btn" href="#" title="Delete">
+                            <i class="fa-solid fa-x"></i>
+                        </a>
+                    </label>
+                    <div class="break"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+</body>
+<script src="js/main.js"></script>
+</html>
