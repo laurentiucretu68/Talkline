@@ -29,10 +29,19 @@ public class Post {
     @Column(name = "post_picture")
     private String picture;
 
+    @Column(name = "likes_number")
+    private Integer likes;
+
     @Column(name = "posting_date")
-    private Date postingDate;
+    private String postingDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    public String formatDate(){
+        String delims  = " ";
+        String[] tokenString = postingDate.split(delims);
+        return tokenString[0];
+    }
 }

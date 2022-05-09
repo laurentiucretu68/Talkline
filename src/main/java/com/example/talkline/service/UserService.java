@@ -1,5 +1,6 @@
 package com.example.talkline.service;
 
+import com.example.talkline.entities.Post;
 import com.example.talkline.entities.User;
 import com.example.talkline.repository.UserRepository;
 import lombok.AllArgsConstructor;

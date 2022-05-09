@@ -1,3 +1,16 @@
+const button = document.querySelectorAll(".sendLike");
+for (let i=0; i<button.length; i++){
+    let card = button[i];
+    card.onclick = function () {
+        if (this.style.color == "lightgray"){
+            this.style.color = "red";
+        } else{
+            this.style.color = "lightgray";
+        }
+    };
+}
+
+
 (function($) {
     $(function() {
 
@@ -25,6 +38,10 @@
 
 const dismissAll = document.getElementById('dismiss-all');
 const dismissBtns = Array.from(document.querySelectorAll('.dismiss-notification'));
+
+
+
+
 
 const notificationCards = document.querySelectorAll('.notification-card');
 

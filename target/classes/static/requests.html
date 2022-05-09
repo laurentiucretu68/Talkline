@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Talkline - Friend Requests</title>
@@ -44,8 +44,8 @@
                 <li><a href="/notifications"><i class="fa-solid fa-bell"></i> Notifications</a></li>
                 <li>
                     <a href="#">
-                        <img src="img/avatar7.png" class="navbar-profile-img">
-                        Laurentiu Cretu
+                        <img th:src="@{${user_home.profilePicture}}" class="navbar-profile-img">
+                        <span th:text="${user_home.email}"></span>
                     </a>
                     <ul class="nav-dropdown">
                         <li><a href="/settings">Settings</a></li>
@@ -56,6 +56,7 @@
         </nav>
     </div>
 </section>
+
 
 <div class="container" style="margin-bottom: 5%;">
     <div class="row gutters" style="margin-top: 10%">
@@ -68,58 +69,25 @@
 
         <div class="jumbotron list-content">
             <ul class="list-group">
+                <p class="text-muted font-size-sm" th:if="${#lists.size(friend_requests) == 0}">Nicio cerere noua :(</p>
+                <li href="#" class="list-group-item text-left" th:each="user: ${friend_requests}">
+                    <a href="profile.html">
+                        <img class="img-thumbnail" th:src="@{${user.profilePicture}}">
+                        <label class="name" style="margin-left: 5%" th:text="${user.getFullName()}">
+                            <br>
+                        </label>
+                    </a>
+                    <label class="pull-right">
+                        <a th:href="@{/accept_friend_request/{email}(email=${user.email})}" class="btn btn-xs requests-btn" title="View">
+                            <i class="fa-solid fa-check"></i>
+                        </a>
+                        <a th:href="@{/decline_friend_request/{email}(email=${user.email})}" class="btn btn-xs requests-btn" title="Delete">
+                            <i class="fa-solid fa-x"></i>
+                        </a>
+                    </label>
+                    <div class="break"></div>
+                </li>
 
-                <li href="#" class="list-group-item text-left">
-                    <a href="profile.html">
-                        <img class="img-thumbnail" src="https://bootdey.com/img/Content/User_for_snippets.png">
-                        <label class="name" style="margin-left: 5%">
-                                Juan guillermo cuadrado<br>
-                        </label>
-                    </a>
-                    <label class="pull-right">
-                        <a  class="btn btn-xs requests-btn" href="#" title="View">
-                            <i class="fa-solid fa-check"></i>
-                        </a>
-                        <a  class="btn btn-xs requests-btn" href="#" title="Delete">
-                            <i class="fa-solid fa-x"></i>
-                        </a>
-                    </label>
-                    <div class="break"></div>
-                </li>
-                <li href="#" class="list-group-item text-left">
-                    <a href="profile.html">
-                        <img class="img-thumbnail" src="https://bootdey.com/img/Content/User_for_snippets.png">
-                        <label class="name" style="margin-left: 5%">
-                            Juan guillermo cuadrado<br>
-                        </label>
-                    </a>
-                    <label class="pull-right">
-                        <a  class="btn btn-xs requests-btn" href="#" title="View">
-                            <i class="fa-solid fa-check"></i>
-                        </a>
-                        <a  class="btn btn-xs requests-btn" href="#" title="Delete">
-                            <i class="fa-solid fa-x"></i>
-                        </a>
-                    </label>
-                    <div class="break"></div>
-                </li>
-                <li href="#" class="list-group-item text-left">
-                    <a href="profile.html">
-                        <img class="img-thumbnail" src="https://bootdey.com/img/Content/User_for_snippets.png">
-                        <label class="name" style="margin-left: 5%">
-                            Juan guillermo cuadrado<br>
-                        </label>
-                    </a>
-                    <label class="pull-right">
-                        <a  class="btn btn-xs requests-btn" href="#" title="View">
-                            <i class="fa-solid fa-check"></i>
-                        </a>
-                        <a  class="btn btn-xs requests-btn" href="#" title="Delete">
-                            <i class="fa-solid fa-x"></i>
-                        </a>
-                    </label>
-                    <div class="break"></div>
-                </li>
             </ul>
         </div>
     </div>

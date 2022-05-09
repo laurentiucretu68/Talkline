@@ -1,9 +1,6 @@
 package com.example.talkline.configuration;
 
-import com.example.talkline.entities.Location;
 import com.example.talkline.entities.User;
-import com.example.talkline.repository.LocationRepository;
-import com.example.talkline.service.UserService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
