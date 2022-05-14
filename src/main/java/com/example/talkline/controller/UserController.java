@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +21,8 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @AllArgsConstructor
@@ -41,9 +42,6 @@ public class UserController {
 
     @Autowired
     private final PostService postService;
-
-    @Autowired
-    private final CommentService commentService;
 
     @GetMapping("/sign-up")
     public String showSignUp(Model model){
@@ -67,6 +65,14 @@ public class UserController {
         return "requests";
     }
 
+    @GetMapping("/settings")
+    public String showSettings(Principal principal, Model model){
+        User user = userService.findByEmail(principal.getName());
+        model.addAttribute("user_home", user);
+        model.addAttribute("user", new User());
+        return "settings";
+    }
+
     @GetMapping("/home")
     public String getUser(Principal principal, Model model){
         User user = userService.findByEmail(principal.getName());
@@ -75,6 +81,7 @@ public class UserController {
 
         Collection<User> friend_requests = userService.selectPossibleFriends(principal.getName());
         Collection<Post> home_posts = postService.selectPostsByUserEmail(user.getEmail());
+        Collection<Post> profile_posts = postService.selectPostsFromProfile(user.getEmail());
 
         model.addAttribute("friendRequests", friend_requests);
         model.addAttribute("homePosts", home_posts);
@@ -83,7 +90,8 @@ public class UserController {
 
     @RequestMapping("/process_register")
     public String processRegister(User user){
-        if (!userService.findUserByEmail(user.getEmail()) && !userService.findUserByPhone(user.getPhone())){
+        if (!userService.findUserByEmail(user.getEmail()) && !userService.findUserByPhone(user.getPhone())
+            && !Objects.equals(user.getEmail(), "") && !Objects.equals(user.getPhone(), "")){
             user.prepareInsert();
             locationService.addLocation(user.getLocation());
             userService.addUser(user);
@@ -92,23 +100,102 @@ public class UserController {
         return "redirect:/sign-up?result=duplicate";
     }
 
+    @RequestMapping("/update_user_info")
+    public String updateUserInfo(Principal principal,
+                                 @RequestParam(value = "firstName", required = false) String firstName,
+                                 @RequestParam(value = "lastName", required = false) String lastName,
+                                 @RequestParam(value = "email", required = false) String email,
+                                 @RequestParam(value = "phone", required = false) String phone,
+                                 @RequestParam(value = "city", required = false) String city,
+                                 @RequestParam(value = "district", required = false) String district,
+                                 @RequestParam(value = "birthDate", required = false) String birthDate,
+                                 @RequestParam(value = "password", required = false) String password,
+                                 @RequestParam(value = "passwordRep", required = false) String passwordRep,
+                                 @RequestParam(value = "profilePicture", required = false) MultipartFile[] multipartFile,
+                                 RedirectAttributes redirectAttributes){
+
+        if (!Objects.equals(password, passwordRep)){
+            redirectAttributes.addFlashAttribute("message",
+                    "Parolele nu coincid");
+            redirectAttributes.addFlashAttribute("alertClass", "alert-danger");
+            return "redirect:/settings";
+        }
+
+        User user = userService.findByEmail(principal.getName());
+        String emailPrincipal = user.getEmail();
+
+        if (!Objects.equals(firstName, "")){
+            user.setFirstName(firstName);
+        }
+        if (!Objects.equals(lastName, "")){
+            user.setLastName(lastName);
+        }
+        if (!Objects.equals(email, "")){
+            user.setEmail(email);
+        }
+        if (!Objects.equals(phone, "")){
+            user.setPhone(phone);
+        }
+        if (!Objects.equals(city, "")){
+            user.getLocation().setCity(city);
+        }
+        if (!Objects.equals(district, "")){
+            user.getLocation().setCity(district);
+        }
+        if (!Objects.equals(password, "")){
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            user.setPassword(encoder.encode(password));
+        }
+        if (!Objects.equals(phone, "")){
+            user.setPhone(phone);
+        }
+
+        if (multipartFile != null){
+            String uploadDirectory = System.getProperty("user.dir") + "/src/main/resources/static/img/";
+            StringBuilder fileNames = new StringBuilder();
+            for (MultipartFile file : multipartFile){
+                Path fileNamePath = Paths.get(uploadDirectory, file.getOriginalFilename());
+                fileNames.append(file.getOriginalFilename());
+                try{
+                    Files.write(fileNamePath, file.getBytes());
+                }catch (IOException e){
+                    e.printStackTrace();
+                    redirectAttributes.addFlashAttribute("message",
+                            "Actualizarea a esuat");
+                    redirectAttributes.addFlashAttribute("alertClass", "alert-danger");
+                }
+            }
+
+            user.setProfilePicture("/img/" + fileNames);
+        }
+
+        userService.updateUser(user, emailPrincipal);
+        redirectAttributes.addFlashAttribute("message",
+                "Date actualizate cu succes!");
+        redirectAttributes.addFlashAttribute("alertClass", "alert-success");
+        return "redirect:/settings";
+    }
+
+    public void sendRequestPrepare(String receiverEmail){
+        Object principal = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        User senderUser = userService.findByEmail(((UserDetails)principal).getUsername());
+        FriendRequest friendRequest = new FriendRequest();
+        friendRequest.setReceiverUser(userService.findByEmail(receiverEmail));
+        friendRequest.setSenderUser(senderUser);
+        friendRequest.prepareInsert();
+        friendRequestService.addRequest(friendRequest);
+    }
+
     @GetMapping("/send_friend_request/{email}")
     public String addFriendRequest(@PathVariable("email") String email, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("message_request",
                 "Cererea a esuat");
         redirectAttributes.addFlashAttribute("alertClass", "alert-danger");
 
-        Object principal = SecurityContextHolder
-                            .getContext()
-                            .getAuthentication()
-                            .getPrincipal();
-        User senderUser = userService.findByEmail(((UserDetails)principal).getUsername());
-
-        FriendRequest friendRequest = new FriendRequest();
-        friendRequest.setReceiverUser(userService.findByEmail(email));
-        friendRequest.setSenderUser(senderUser);
-        friendRequest.prepareInsert();
-        friendRequestService.addRequest(friendRequest);
+        sendRequestPrepare(email);
 
         redirectAttributes.addFlashAttribute("message_request",
                 "Cerere trimisa cu succes!");
@@ -116,7 +203,13 @@ public class UserController {
         return "redirect:/home";
     }
 
-    @GetMapping("/accept_friend_request/{email}")
+    @RequestMapping("/short_send_friend_request/{email}")
+    public String sendFriendReq(@PathVariable("email") String email){
+        sendRequestPrepare(email);
+        return "redirect:/"+ email;
+    }
+
+    @RequestMapping("/accept_friend_request/{email}")
     public String acceptFriendRequest(@PathVariable("email") String email) {
 
         Object principal = SecurityContextHolder
@@ -129,9 +222,7 @@ public class UserController {
         friendship.setUser1(userService.findByEmail(email));
         friendship.setUser2(senderUser);
         friendsService.addFriendship(friendship);
-
-        //friendRequestService.deleteFriendRequestByEmails(email, senderUser.getEmail());
-
+        friendRequestService.deleteFriendRequestByEmails(senderUser.getEmail(), email);
         return "redirect:/requests";
     }
 
@@ -143,9 +234,41 @@ public class UserController {
                 .getAuthentication()
                 .getPrincipal();
         User senderUser = userService.findByEmail(((UserDetails)principal).getUsername());
-        //friendRequestService.deleteFriendRequestByEmails(email, senderUser.getEmail());
-
+        friendRequestService.deleteFriendRequestByEmails(email, senderUser.getEmail());
         return "redirect:/requests";
+    }
+
+    @RequestMapping("/{email}")
+    public String loadProfile(@PathVariable("email") String email, Model model) {
+        Object principal = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        User currentUser = userService.findByEmail(((UserDetails)principal).getUsername());
+        model.addAttribute("user_home2", currentUser);
+
+        User userProfile = userService.findByEmail(email);
+        model.addAttribute("user_profile", userProfile);
+
+        Collection<Post> profile_posts = postService.selectPostsFromProfile(email);
+
+
+        int profileCurrentUser = 0;
+        if (!Objects.equals(email, currentUser.getEmail())){
+            Collection<User> friends = userService.getFriends(currentUser.getEmail());
+            for (User u : friends){
+                if (Objects.equals(u.getEmail(), email)) {
+                    profileCurrentUser = 1;
+                    break;
+                }
+            }
+        } else{
+            profileCurrentUser = 1;
+        }
+
+        model.addAttribute("isFriend", profileCurrentUser);
+        model.addAttribute("profilePosts", profile_posts);
+        return "profile";
     }
 
     @PostMapping("/post_something")

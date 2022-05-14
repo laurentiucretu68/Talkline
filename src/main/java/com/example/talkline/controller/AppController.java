@@ -23,19 +23,9 @@ public class AppController {
         return "messages";
     }
 
-    @GetMapping("/profile")
-    public String showProfile(){
-        return "profile";
-    }
-
     @GetMapping("/results")
     public String showResults(){
         return "results";
-    }
-
-    @GetMapping("/settings")
-    public String showSettings(){
-        return "settings";
     }
 
     @GetMapping("/sign-in")

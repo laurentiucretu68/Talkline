@@ -1,6 +1,5 @@
 package com.example.talkline.service;
 
-import com.example.talkline.entities.Post;
 import com.example.talkline.entities.User;
 import com.example.talkline.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -42,4 +41,13 @@ public class UserService {
     public Collection<User> selectPossibleFriends(String email){
         return userRepository.selectPossibleFriends(email);
     }
+
+    public Collection<User> getFriends(String email){
+        return userRepository.getFriends(email);
+    }
+
+    public void updateUser(User user, String email){
+        userRepository.updateUser(user, email);
+    }
+
 }

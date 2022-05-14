@@ -65,20 +65,4 @@ public class User {
         LocalDateTime now = LocalDateTime.now();
         subscribeDate = dtf.format(now);
     }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", password='" + password + '\'' +
-                ", profilePicture='" + profilePicture + '\'' +
-                ", birthDate='" + birthDate + '\'' +
-                ", subscribeDate='" + subscribeDate + '\'' +
-                ", location=" + location +
-                '}';
-    }
 }

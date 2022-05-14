@@ -20,4 +20,8 @@ public class PostService {
     public Collection<Post> selectPostsByUserEmail(String email){
         return postRepository.selectPostsByUserEmail(email);
     }
+
+    public Collection<Post> selectPostsFromProfile(String email){
+        return postRepository.selectPostsFromProfile(email);
+    }
 }

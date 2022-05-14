@@ -1,16 +1,22 @@
 package com.example.talkline.repository;
 
-import com.example.talkline.entities.Post;
 import com.example.talkline.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.Collection;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
+
+    @Transactional
+    @Modifying
+    @Query("update User u set u=:user where u.email=:email")
+    public void updateUser(User user, String email);
 
     @Query("select case when count(u)>0 " +
             "then TRUE else false end " +
@@ -37,7 +43,16 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             " where u.email != :email" +
             " and u.id not in (select sender_id from requests where receiver_id=(select id from users where email=:email))" +
             " and u.id not in (select receiver_id from requests where sender_id=(select id from users where email=:email))" +
+            " and u.id not in (select id_user1 from friends where id_user2= (select id from users where email=:email))" +
+            " and u.id not in (select id_user2 from friends where id_user1= (select id from users where email=:email))" +
             " order by u.subscribe_date desc" +
             " limit 5", nativeQuery = true)
     Collection<User> selectPossibleFriends(String email);
+
+    @Query("select u from User u where u in " +
+            "(select f.user1 from Friends f where f.user2.email=:email)" +
+            " or u in (select f.user2 from Friends f where f.user1.email=:email)" +
+            " or u in (select r.receiverUser from FriendRequest r where r.senderUser.email=:email)" +
+            " or u in (select r.senderUser from FriendRequest r where r.receiverUser.email=:email)")
+    Collection<User> getFriends(String email);
 }

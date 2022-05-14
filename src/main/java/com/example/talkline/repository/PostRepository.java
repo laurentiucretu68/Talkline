@@ -28,4 +28,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             "        or f.id_user2 = (select id from users u_int where u_int.email = :email) " +
             "    ) order by id desc ;", nativeQuery = true)
     Collection<Post> selectPostsByUserEmail(String email);
+
+    @Query("select p from Post p where p.user.email=:email")
+    Collection<Post> selectPostsFromProfile(String email);
 }

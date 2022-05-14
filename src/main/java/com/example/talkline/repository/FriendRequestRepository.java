@@ -12,9 +12,11 @@ public interface FriendRequestRepository extends JpaRepository<FriendRequest, In
 
     @Modifying
     @Transactional
-    @Query("delete from FriendRequest f " +
-            "where (f.senderUser.email=:email1 and f.receiverUser.email=:email2) " +
-            "or (f.senderUser.email=:email2 and f.receiverUser.email=:email1)")
+    @Query(value = "delete from requests " +
+            "where (receiver_id = (select id from users where email=:email1) " +
+            "and sender_id = (select id from users where email=:email2)) " +
+            "or (sender_id = (select id from users where email=:email1) " +
+            "and receiver_id = (select id from users where email=:email2))", nativeQuery = true)
     void deleteFriendRequestByEmails(@Param("email1") String email1, @Param("email2") String email2);
 
 }

@@ -51,6 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/messages", "/messages.html",
                         "/notifications", "/notifications.html",
                         "/profile", "/profile.html",
+                        "/{email}",
                         "/requests", "/requests.html",
                         "/settings", "/settings.html").authenticated()
                 .anyRequest().permitAll()

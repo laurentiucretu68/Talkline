@@ -40,7 +40,7 @@
             </div>
 
             <ul class="nav-list">
-                <li><a href="/profile"><i class="fa-solid fa-home"></i> My Profile</a></li>
+                <li><a th:href="@{/{email}(email=${user_home.email})}"><i class="fa-solid fa-home"></i> My Profile</a></li>
                 <li><a href="/requests"><i class="fa-solid fa-circle-plus"></i> Friend Requests</a></li>
                 <li><a href="/messages"><i class="fa-solid fa-envelope"></i> Messages</a></li>
                 <li><a href="/notifications"><i class="fa-solid fa-bell"></i> Notifications</a></li>
@@ -76,7 +76,7 @@
                     </div>
                 </div>
 
-                <div class="card" style="margin-top: 5%; padding-bottom: 0 !important;">
+                <div style="margin-top: 5%; padding-bottom: 0 !important; width: 98%">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
                             <div th:if="${message_request}" th:text="${message_request}" th:class="${'alert ' + alertClass}"></div>
@@ -85,7 +85,7 @@
                                 <p class="text-muted font-size-sm" th:if="${#lists.size(friendRequests) == 0}">Niciun utilizator nou</p>
 
                                 <li class="list-group-item text-left" th:each="user: ${friendRequests}">
-                                    <a th:href="@{/profile/{email}(email=${user.email})}">
+                                    <a th:href="@{/{email}(email=${user.email})}">
                                         <img class="img-thumbnail" th:src="@{${user.profilePicture}}">
 
                                         <label class="name" th:text="${user.getFullName()}">
@@ -109,7 +109,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div>
-                            <h2>Post</h2>
+                            <p class="text-muted font-size-sm" style="font-size: 25px">Post</p>
                             <div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></div>
 
                             <form th:action="@{/post_something}" method="post" th:object="${current_post}" class="panel-activity__status" enctype="multipart/form-data">
@@ -126,10 +126,11 @@
                                 </div>
                             </form>
 
-                            <p class="text-muted font-size-sm" th:if="${#lists.size(homePosts) == 0}">Nicio postare noua!</p>
+                            <p class="text-muted font-size-sm" th:if="${#lists.size(homePosts) == 0}"
+                               style="text-align: center; font-size: 20px; margin-top: 5%">Nicio postare noua!</p>
                             <div class="card card-01" th:each="post: ${homePosts}">
                                 <div class="d-flex justify-content-start" >
-                                    <a th:src="@{/profile/{email}(email=${post.user.getEmail()})}">
+                                    <a th:href="@{/{email}(email=${post.user.getEmail()})}">
                                         <div class="d-flex flex-row align-items-center"  style="display: flex">
                                             <img th:src="@{${post.user.getProfilePicture()}}" width="50" class="rounded-circle-01">
                                             <div style="margin-left: 3%">
