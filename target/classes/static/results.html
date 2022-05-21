@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Talkline - Results</title>
@@ -21,9 +21,9 @@
             <a href="/home">Talkline</a>
         </div>
 
-        <form class="navbar-search" action="/results">
+        <form class="navbar-search" th:action="@{/results}" method="get">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search" name="search">
+                <input type="text" class="form-control" placeholder="Search" name="words" required>
                 <div class="input-group-btn">
                     <button class="btn btn-default" type="submit" style="border: 1px solid white !important;">
                         <i class="glyphicon glyphicon-search" style="color: white !important;"></i>
@@ -38,18 +38,18 @@
             </div>
 
             <ul class="nav-list">
-                <li><a href="/profile"><i class="fa-solid fa-home"></i> My Profile</a></li>
+                <li><a th:href="@{/{email}(email=${user_home.email})}"><i class="fa-solid fa-home"></i> My Profile</a></li>
                 <li><a href="/requests"><i class="fa-solid fa-circle-plus"></i> Friend Requests</a></li>
                 <li><a href="/messages"><i class="fa-solid fa-envelope"></i> Messages</a></li>
                 <li><a href="/notifications"><i class="fa-solid fa-bell"></i> Notifications</a></li>
                 <li>
                     <a href="#">
-                        <img src="img/avatar7.png" class="navbar-profile-img">
-                        Laurentiu Cretu
+                        <img th:src="@{${user_home.profilePicture}}" class="navbar-profile-img">
+                        <span th:text="${user_home.email}"></span>
                     </a>
                     <ul class="nav-dropdown">
                         <li><a href="/settings">Settings</a></li>
-                        <li><a href="/sign-up">Sign out</a></li>
+                        <li><a href="/sign-in">Sign out</a></li>
                     </ul>
                 </li>
             </ul>
@@ -60,99 +60,27 @@
 <div class="container" style="margin-bottom: 5%">
     <div class="row gutters" style="margin-top: 10%">
         <div class="card" style="padding-left: 5% !important;">
-            <p class="search-results-count" style="margin-bottom: 20px; opacity: 0.7">Results (10) for: Nico</p>
-            <section class="search-result-item">
-                <a class="image-link" href="profile">
-                    <img class="image-result" src="img/blank_profile.png">
-                </a>
-                <div class="search-result-item-body">
-                    <div class="row">
-                        <div class="col-sm-9">
-                            <h4 class="search-result-item-heading"><a href="profile">Nico Nico</a></h4>
-                            <p class="info">Bucharest, Romania</p>
-                            <p class="description">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                when an unknown printer took a galley of type and scrambled it to make a type
-                                specimen book.
-                            </p>
-                        </div>
-                        <div class="col-sm-3 text-align-center">
-                            <a class="btn btn-primary btn-info btn-sm" href="profile">View profile</a>
+            <p class="text-muted font-size-sm" th:if="${#lists.size(users) == 0}" style="text-align: center">No results found</p>
+
+            <ul>
+                <li class="search-result-item" th:each="user: ${users}" style="list-style-type: none">
+                    <a class="image-link" th:href="@{/{email}(email=${user.email})}">
+                        <img class="image-result" th:src="@{${user.profilePicture}}" >
+                    </a>
+                    <div class="search-result-item-body">
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <h4 class="search-result-item-heading">
+                                    <a th:href="@{/{email}(email=${user.email})}" th:text="${user.getFullName()}"></a></h4>
+                                <p class="info" th:text="${user.getCustomLocation()}"></p>
+                            </div>
+                            <div class="col-sm-3 text-align-center">
+                                <a class="btn btn-primary btn-info btn-sm" th:href="@{/{email}(email=${user.email})}">View profile</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-
-            <section class="search-result-item">
-                <a class="image-link" href="profile">
-                    <img class="image-result" src="img/blank_profile.png">
-                </a>
-                <div class="search-result-item-body">
-                    <div class="row">
-                        <div class="col-sm-9">
-                            <h4 class="search-result-item-heading"><a href="profile">Nico Nico</a></h4>
-                            <p class="info">Bucharest, Romania</p>
-                            <p class="description">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                when an unknown printer took a galley of type and scrambled it to make a type
-                                specimen book.
-                            </p>
-                        </div>
-                        <div class="col-sm-3 text-align-center">
-                            <a class="btn btn-primary btn-info btn-sm" href="profile">View profile</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="search-result-item">
-                <a class="image-link" href="profile">
-                    <img class="image-result" src="img/blank_profile.png">
-                </a>
-                <div class="search-result-item-body">
-                    <div class="row">
-                        <div class="col-sm-9">
-                            <h4 class="search-result-item-heading"><a href="profile">Nico Nico</a></h4>
-                            <p class="info">Bucharest, Romania</p>
-                            <p class="description">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                when an unknown printer took a galley of type and scrambled it to make a type
-                                specimen book.
-                            </p>
-                        </div>
-                        <div class="col-sm-3 text-align-center">
-                            <a class="btn btn-primary btn-info btn-sm" href="profile">View profile</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="search-result-item">
-                <a class="image-link" href="profile">
-                    <img class="image-result" src="img/blank_profile.png">
-                </a>
-                <div class="search-result-item-body">
-                    <div class="row">
-                        <div class="col-sm-9">
-                            <h4 class="search-result-item-heading"><a href="profile">Nico Nico</a></h4>
-                            <p class="info">Bucharest, Romania</p>
-                            <p class="description">
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                when an unknown printer took a galley of type and scrambled it to make a type
-                                specimen book.
-                            </p>
-                        </div>
-                        <div class="col-sm-3 text-align-center">
-                            <a class="btn btn-primary btn-info btn-sm" href="profile">View profile</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
+                </li>
+            </ul>
         </div>
     </div>
 </div>

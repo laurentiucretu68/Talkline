@@ -23,9 +23,9 @@
             <a href="">Talkline</a>
         </div>
 
-        <form class="navbar-search" action="/results">
+        <form class="navbar-search" th:action="@{/results}" method="get">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search" name="search">
+                <input type="text" class="form-control" placeholder="Search" name="words" required>
                 <div class="input-group-btn">
                     <button class="btn btn-default" type="submit" style="border: 1px solid white !important;">
                         <i class="glyphicon glyphicon-search" style="color: white !important;"></i>
@@ -67,7 +67,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <img th:src="@{${user_home.profilePicture}}" alt="Admin" class="rounded-circle" width="150">
+                            <img th:src="@{${user_home.profilePicture}}" alt="Admin" class="rounded-circle" width="146" height="136">
                             <div class="mt-3">
                                 <h4 th:text="${user_home.getFullName()}"></h4>
                                 <p class="text-muted font-size-sm" th:text="${user_home.getCustomLocation()}"></p>
@@ -118,7 +118,8 @@
                                 <div class="actions">
                                     <div class="btn-group" style="display: flex; align-items: center;">
                                         <i class="fa fa-image" style="margin-right: 10px"></i>
-                                        <input type="file" name="pic" class="btn-link" title="" data-toggle="tooltip" data-original-title="Post an Image" accept="image/png, image/jpeg, image/jpg, image/gif">
+                                        <input type="file" name="pic" class="btn-link" title="" data-toggle="tooltip"
+                                               data-original-title="Post an Image" accept="image/png, image/jpeg, image/jpg, image/gif">
                                     </div>
                                     <button type="submit" class="btn btn-sm btn-rounded btn-info">
                                         Post
@@ -138,7 +139,7 @@
                                                 <span class="font-weight-bold" th:text="${post.user.getFullName()}"></span>
                                                 </div>
                                                 <div class="d-flex flex-row mt-1 ellipsis">
-                                                    <small class="mr-2" th:text="${post.formatDate()}"></small> <i class="fa fa-ellipsis-h"></i>
+                                                    <small class="mr-2" th:text="${post.formatDate()}"></small>
                                                 </div>
                                             </div>
                                         </div>
@@ -151,12 +152,13 @@
 
                                 <div class="p-2">
                                     <hr>
-                                    <div class="d-flex justify-content-between align-items-center" style="display: flex">
-                                        <div class="d-flex flex-row icons d-flex align-items-center" style="cursor: pointer">
-                                            <i class="fa fa-heart sendLike" style="color: lightgray"></i>
+                                    <div class="d-flex justify-content-between align-items-center like-system" style="display: flex">
+                                        <input type="text" th:value="@{${post.postId}}" style="display: none" id="postId" class="postId">
+                                        <div id="like-button" class="d-flex flex-row icons d-flex align-items-center like-button" style="cursor: pointer">
+                                            <i class="fa fa-heart sendLike" id="sendLike" style="color: lightgray"></i>
                                         </div>
-                                        <div class="d-flex flex-row muted-color" style="margin-left: 13px; font-size: 17px">
-                                            <span th:text="${post.likes}"> likes</span>
+                                        <div class="d-flex flex-row muted-color" style="margin-left: 13px; font-size: 17px; display: flex">
+                                            <input type="text" th:value="${post.likes}" class="likesNr" style="border: 0 !important; width: 13%" disabled> likes
                                         </div>
                                     </div>
                                     <hr>
@@ -195,5 +197,6 @@
 </div>
 </body>
 <script src="js/main.js"></script>
+<script src="js/get.js"></script>
 
 </html>

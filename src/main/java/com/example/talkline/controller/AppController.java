@@ -18,16 +18,6 @@ public class AppController {
         return "notifications";
     }
 
-    @GetMapping("/messages")
-    public String showMessages(){
-        return "messages";
-    }
-
-    @GetMapping("/results")
-    public String showResults(){
-        return "results";
-    }
-
     @GetMapping("/sign-in")
     public String showSignIn(){
         return "sign-in";

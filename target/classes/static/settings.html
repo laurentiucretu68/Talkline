@@ -21,9 +21,9 @@
             <a href="/home">Talkline</a>
         </div>
 
-        <form class="navbar-search" action="/results">
+        <form class="navbar-search" th:action="@{/results}" method="get">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search" name="search">
+                <input type="text" class="form-control" placeholder="Search" name="words" required>
                 <div class="input-group-btn">
                     <button class="btn btn-default" type="submit" style="border: 1px solid white !important;">
                         <i class="glyphicon glyphicon-search" style="color: white !important;"></i>
@@ -63,7 +63,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex flex-column align-items-center text-center">
-                        <img th:src="@{${user_home.profilePicture}}" alt="Admin" class="rounded-circle" width="150">
+                        <img th:src="@{${user_home.profilePicture}}" alt="Admin" class="rounded-circle" width="150" height="136">
                         <div class="mt-3">
                             <h4 th:text="${user_home.getFullName()}"></h4>
                             <p class="text-muted font-size-sm" th:text="${user_home.getCustomLocation()}"></p>
@@ -76,11 +76,11 @@
         <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12" >
             <div class="card h-100" >
                 <div class="card-body" style="padding-left: 5%">
-                    <form class="row gutters" th:action="@{/update_user_info}">
+                    <form class="row gutters" th:action="@{/update_user_info}" enctype="multipart/form-data" method="post">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <h4 class="mb-3 text-primary">Personal Details</h4>
                         </div>
-                        <div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}" style="margin-top: 10px"></div>
+                        <div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}" style="margin-top: 10px; width: 90%"></div>
 
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
@@ -132,19 +132,6 @@
 
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
-                                <label for="sign-up-last-date">Birth Date</label>
-                                <input type="date" class="form-control" id="sign-up-last-date" th:name="birthDate">
-                            </div>
-                        </div>
-
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                            <label for="photo">Profile picture</label>
-                            <input type="file" class="form-control" id="photo" th:name="profilePicture"
-                                   accept="image/png, image/jpeg, image/jpg, image/gif" style="width: 90% !important;">
-                        </div>
-
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                            <div class="form-group">
                                 <label for="password">Password</label>
                                 <input type="password" class="form-control" id="password"
                                        placeholder="New password" th:name="password">
@@ -158,6 +145,21 @@
                                        placeholder="New password" th:name="passwordRep">
                             </div>
                         </div>
+
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="sign-up-last-date">Birth Date</label>
+                                <input type="date" class="form-control" id="sign-up-last-date" th:name="birthDate">
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <label for="photo">Profile picture</label>
+                            <input type="file" class="form-control" id="photo" th:name="profilePicture"
+                                   accept="image/png, image/jpeg, image/jpg, image/gif" style="width: 90% !important;">
+                        </div>
+
+
 
                         <div class="row gutters" style="margin-right: 4.5%">
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">

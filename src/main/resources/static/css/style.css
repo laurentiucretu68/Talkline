@@ -87,7 +87,6 @@ html, body{
 
 .rounded-circle{
     background-color: #6495ED;
-    padding: 10px;
     border-radius: 50%;
 }
 
@@ -446,6 +445,9 @@ button.btn-link {
 
 
 /********* Messages *************/
+.chat-app{
+    border-right: 1px solid #efefef;
+}
 
 .chat-app .people-list {
     width: 280px;
@@ -458,7 +460,6 @@ button.btn-link {
 
 .chat-app .chat {
     margin-left: 280px;
-    border-left: 1px solid #eaeaea
 }
 
 .people-list {
@@ -471,7 +472,7 @@ button.btn-link {
 .people-list .chat-list li {
     padding: 10px 15px;
     list-style: none;
-    border-radius: 3px
+    border-radius: 3px;
 }
 
 .people-list .chat-list li:hover {
@@ -586,7 +587,6 @@ button.btn-link {
 .chat .chat-history .my-message:after {
     bottom: 100%;
     left: 30px;
-    border: solid transparent;
     content: " ";
     height: 0;
     width: 0;
@@ -979,6 +979,7 @@ nav ul li ul li a {
 }
 
 .search-result-item {
+    width: 90%;
     padding: 20px;
     background-color: #fff;
     border-radius: 4px;
@@ -1158,3 +1159,10 @@ td:nth-child(2){
     width: 55px !important;
     font-size: 13px !important;
 }
+
+.like-button{
+    background: none !important;
+    border: none !important;
+}
+
+

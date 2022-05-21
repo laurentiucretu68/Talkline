@@ -50,4 +50,7 @@ public class UserService {
         userRepository.updateUser(user, email);
     }
 
+    public Collection<User> searchUsers(String words){
+        return userRepository.searchUsers(words);
+    }
 }

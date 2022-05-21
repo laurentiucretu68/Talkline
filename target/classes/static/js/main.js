@@ -1,16 +1,33 @@
 const button = document.querySelectorAll(".sendLike");
+const post = document.querySelectorAll(".postId");
+const likes = document.querySelectorAll(".likesNr");
 for (let i=0; i<button.length; i++){
     let card = button[i];
+    let id = post[i].value;
+    let current_like = likes[i].value;
     card.onclick = function () {
-        if (this.style.color == "lightgray"){
-            this.style.color = "red";
+        if (this.style.color === 'lightgray'){
+            this.style.color = 'red';
+            current_like++;
+
+                    $.ajax({
+                        type : "POST",
+                        contentType : "application/json",
+                        url : "/update-likes",
+                        data : JSON.stringify(id),
+                        dataType : 'json',
+                        cache : false,
+                        timeout : 600000,
+                    });
+
         } else{
-            this.style.color = "lightgray";
+            this.style.color = 'lightgray';
+            if (current_like > 0)
+                current_like--;
         }
+        likes[i].value = current_like;
     };
 }
-
-
 (function($) {
     $(function() {
 

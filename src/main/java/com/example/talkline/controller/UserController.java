@@ -3,7 +3,6 @@ package com.example.talkline.controller;
 import com.example.talkline.entities.*;
 import com.example.talkline.service.*;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,19 +27,14 @@ import java.util.Objects;
 @AllArgsConstructor
 public class UserController {
 
-    @Autowired
     private final UserService userService;
 
-    @Autowired
     private final LocationService locationService;
 
-    @Autowired
     private final FriendRequestService friendRequestService;
 
-    @Autowired
     private final FriendsService friendsService;
 
-    @Autowired
     private final PostService postService;
 
     @GetMapping("/sign-up")
@@ -81,7 +75,6 @@ public class UserController {
 
         Collection<User> friend_requests = userService.selectPossibleFriends(principal.getName());
         Collection<Post> home_posts = postService.selectPostsByUserEmail(user.getEmail());
-        Collection<Post> profile_posts = postService.selectPostsFromProfile(user.getEmail());
 
         model.addAttribute("friendRequests", friend_requests);
         model.addAttribute("homePosts", home_posts);
@@ -100,7 +93,7 @@ public class UserController {
         return "redirect:/sign-up?result=duplicate";
     }
 
-    @RequestMapping("/update_user_info")
+    @PostMapping("/update_user_info")
     public String updateUserInfo(Principal principal,
                                  @RequestParam(value = "firstName", required = false) String firstName,
                                  @RequestParam(value = "lastName", required = false) String lastName,
@@ -111,7 +104,7 @@ public class UserController {
                                  @RequestParam(value = "birthDate", required = false) String birthDate,
                                  @RequestParam(value = "password", required = false) String password,
                                  @RequestParam(value = "passwordRep", required = false) String passwordRep,
-                                 @RequestParam(value = "profilePicture", required = false) MultipartFile[] multipartFile,
+                                 @RequestParam(value = "profilePicture") MultipartFile[] multipartFile,
                                  RedirectAttributes redirectAttributes){
 
         if (!Objects.equals(password, passwordRep)){
@@ -146,8 +139,8 @@ public class UserController {
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             user.setPassword(encoder.encode(password));
         }
-        if (!Objects.equals(phone, "")){
-            user.setPhone(phone);
+        if (!Objects.equals(birthDate, "")){
+            user.setBirthDate(birthDate);
         }
 
         if (multipartFile != null){
@@ -308,5 +301,28 @@ public class UserController {
                 "Postare adaugata cu succes!");
         redirectAttributes.addFlashAttribute("alertClass", "alert-success");
         return "redirect:/home";
+    }
+
+    @GetMapping("/results")
+    public void listResults(@RequestParam(value = "words") String words,
+                            Model model, Principal principal){
+        Collection<User> users = userService.searchUsers(words);
+        model.addAttribute("users", users);
+        User user = userService.findByEmail(principal.getName());
+        model.addAttribute("user_home", user);
+    }
+
+    @GetMapping("/messages")
+    public String showMessages(Model model, Principal principal){
+        User user = userService.findByEmail(principal.getName());
+        model.addAttribute("user_home", user);
+        Collection<User> friends = userService.getFriends(principal.getName());
+        model.addAttribute("friends", friends);
+        return "messages";
+    }
+
+    @PostMapping("/update-likes")
+    public void updateLikes(){
+        System.out.println("adfsafasjgfashfgas");
     }
 }

@@ -16,7 +16,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Transactional
     @Modifying
     @Query("update User u set u=:user where u.email=:email")
-    public void updateUser(User user, String email);
+    void updateUser(User user, String email);
 
     @Query("select case when count(u)>0 " +
             "then TRUE else false end " +
@@ -55,4 +55,15 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             " or u in (select r.receiverUser from FriendRequest r where r.senderUser.email=:email)" +
             " or u in (select r.senderUser from FriendRequest r where r.receiverUser.email=:email)")
     Collection<User> getFriends(String email);
+
+    @Query(value = "select * from users u " +
+            "where locate(lower(u.email), lower(:words)) != 0 " +
+            "or locate(lower(u.first_name), lower(:words)) != 0 " +
+            "or locate(lower(u.last_name), lower(:words)) != 0 " +
+            "or locate(lower(u.phone), lower(:words)) != 0 " +
+            "or locate(lower(:words), lower(u.email)) != 0 " +
+            "or locate(lower(:words), lower(u.first_name)) != 0 " +
+            "or locate(lower(:words), lower(u.last_name)) != 0 " +
+            "or locate(lower(:words), lower(u.phone)) != 0 ", nativeQuery = true)
+    Collection<User> searchUsers(String words);
 }

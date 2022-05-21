@@ -6,9 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -42,6 +39,6 @@ public class Post {
     public String formatDate(){
         String delims  = " ";
         String[] tokenString = postingDate.split(delims);
-        return tokenString[0];
+        return tokenString[1] + ' ' + tokenString[0];
     }
 }
