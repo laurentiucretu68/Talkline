@@ -50,8 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/home", "/home.html",
                         "/messages", "/messages.html",
                         "/notifications", "/notifications.html",
-                        "/profile", "/profile.html",
-                        "/{email}",
+                        "/profile", "/profile.html", "/{email}",
                         "/requests", "/requests.html",
                         "/settings", "/settings.html").authenticated()
                 .anyRequest().permitAll()

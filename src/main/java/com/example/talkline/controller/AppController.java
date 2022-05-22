@@ -13,11 +13,6 @@ public class AppController {
         return "sign-in";
     }
 
-    @GetMapping("/notifications")
-    public String showNotifications(){
-        return "notifications";
-    }
-
     @GetMapping("/sign-in")
     public String showSignIn(){
         return "sign-in";

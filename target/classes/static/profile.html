@@ -78,7 +78,8 @@
                                 <p class="text-muted font-size-sm" th:text="${user_profile.getCustomLocation()}">Bucharest, Romania</p>
 
                                 <span class="text-muted font-size-sm" th:if="${isFriend == 0}">
-                                    <a th:href="@{/short_send_friend_request/{email}(email=${user_profile.email})}" class="btn btn-primary">Send friend request</a>
+                                    <a th:href="@{/short_send_friend_request/{email}(email=${user_profile.email})}" class="btn btn-primary" style="height: 30px;
+                                    width: 180px; font-size: 17px; justify-content: center; align-items: center;">Send friend request</a>
                                 </span>
 
                                 <div class="row" style="margin-top: 10%; height: 20px">
@@ -95,6 +96,27 @@
                                     <span class="col-sm-9 text-secondary" style="margin-top: 5px" th:text="${user_profile.phone}"></span>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 5%; padding-bottom: 0 !important; width: 98%">
+                    <h3 class="text-muted prj-name">Friends</h3>
+                    <p class="text-muted font-size-sm" th:if="${#lists.size(friends) == 0}">0 friends :(</p>
+
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <ul class="list-group">
+                                <li class="list-group-item text-left" th:each="user: ${friends}">
+                                    <a th:href="@{/{email}(email=${user.email})}">
+                                        <img class="img-thumbnail" th:src="@{${user.profilePicture}}">
+
+                                        <label class="name" th:text="${user.getFullName()}">
+                                        </label>
+                                    </a>
+                                </li>
+
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -129,12 +151,13 @@
 
                                 <div class="p-2">
                                     <hr>
-                                    <div class="d-flex justify-content-between align-items-center" style="display: flex">
-                                        <div class="d-flex flex-row icons d-flex align-items-center" style="cursor: pointer">
-                                            <i class="fa fa-heart sendLike" style="color: lightgray"></i>
+                                    <div class="d-flex justify-content-between align-items-center like-system" style="display: flex">
+                                        <input type="text" th:value="@{${post.postId}}" style="display: none" id="postId" class="postId">
+                                        <div id="like-button" class="d-flex flex-row icons d-flex align-items-center like-button" style="cursor: pointer">
+                                            <i class="fa fa-heart sendLike" id="sendLike" style="color: lightgray"></i>
                                         </div>
-                                        <div class="d-flex flex-row muted-color" style="margin-left: 13px; font-size: 17px">
-                                            <span th:text="${post.likes}"> likes</span>
+                                        <div class="d-flex flex-row muted-color" style="margin-left: 13px; font-size: 17px; display: flex">
+                                            <input type="text" th:value="${post.likes}" class="likesNr" style="border: 0 !important; width: 13%" disabled> likes
                                         </div>
                                     </div>
                                     <hr>
@@ -162,16 +185,12 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
-
         </div>
 
     </div>
 </div>
+
 </body>
-
 <script src="js/main.js"></script>
-
 </html>

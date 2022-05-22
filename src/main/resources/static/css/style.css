@@ -90,7 +90,7 @@ html, body{
     border-radius: 50%;
 }
 
-.btn, btn-primary{
+.btn{
     background-color: #6495ED !important;
     border: 0 !important;
     color: white;
@@ -286,9 +286,6 @@ input[type=text], input[type=date]{
 
 }
 
-
-
-
 /*******************************************************/
 .card-01{
     padding: 10px;
@@ -380,7 +377,6 @@ hr {
     border-radius: 50px;
 }
 
-
 /************************************************/
 .panel-activity__status > .actions {
     display: -ms-flexbox;
@@ -427,8 +423,7 @@ button.btn-link {
     font-size: 13px !important;
 }
 
-.btn-group,
-.btn-group-vertical {
+.btn-group, .btn-group-vertical {
     position: relative;
     display: -ms-inline-flexbox;
     display: inline-flex;
@@ -441,8 +436,6 @@ button.btn-link {
     flex: 1;
     font-size: 16px;
 }
-
-
 
 /********* Messages *************/
 .chat-app{
@@ -539,7 +532,7 @@ button.btn-link {
 }
 
 .chat .chat-history ul li:last-child {
-    margin-bottom: 0px
+    margin-bottom: 0
 }
 
 .chat .chat-history .message-data {
@@ -569,14 +562,13 @@ button.btn-link {
 .chat .chat-history .message:after {
     bottom: 100%;
     left: 7%;
-    border: solid transparent;
     content: " ";
     height: 0;
     width: 0;
     position: absolute;
     pointer-events: none;
+    border: 10px solid transparent;
     border-bottom-color: #fff;
-    border-width: 10px;
     margin-left: -10px
 }
 
@@ -611,9 +603,7 @@ button.btn-link {
     padding: 20px
 }
 
-.online,
-.offline,
-.me {
+.online, .offline, .me {
     margin-right: 2px;
     font-size: 8px;
     vertical-align: middle
@@ -679,7 +669,9 @@ button.btn-link {
     }
 }
 
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px)
+    and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
+
     .chat-app .chat-list {
         height: 480px;
         overflow-x: auto
@@ -737,9 +729,11 @@ button.btn-link {
     padding-bottom: 1rem;
     text-align: center;
 }
+
 .account-settings .user-profile .user-avatar {
     margin: 0 0 1rem 0;
 }
+
 .account-settings .user-profile .user-avatar img {
     width: 90px;
     height: 90px;
@@ -747,19 +741,23 @@ button.btn-link {
     -moz-border-radius: 100px;
     border-radius: 100px;
 }
+
 .account-settings .user-profile h5.user-name {
     margin: 0 0 0.5rem 0;
 }
+
 .account-settings .user-profile h6.user-email {
     margin: 0;
     font-size: 0.8rem;
     font-weight: 400;
 }
+
 .account-settings .about {
     margin: 1rem 0 0 0;
     font-size: 0.8rem;
     text-align: center;
 }
+
 .form-control {
     border: 1px solid #596280;
     -webkit-border-radius: 2px;
@@ -770,9 +768,7 @@ button.btn-link {
     color: #bcd0f7;
 }
 
-
-
-/********/
+/******************/
 nav {
     float: right;
 }
@@ -817,6 +813,7 @@ nav ul li ul li {
     background-color: #6495ED !important;
     min-width: 190px;
 }
+
 nav ul li ul li a {
     padding: 15px;
     line-height: 20px;
@@ -829,8 +826,6 @@ nav ul li ul li a {
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
     display: none;
 }
-
-
 
 .nav-mobile {
     display: none;
@@ -869,16 +864,16 @@ nav ul li ul li a {
         position: sticky;
     }
 }
+
 #nav-toggle {
     position: absolute;
     left: 18px;
     top: 22px;
     cursor: pointer;
-    padding: 10px 35px 16px 0px;
+    padding: 10px 35px 16px 0;
 }
-#nav-toggle span,
-#nav-toggle span:before,
-#nav-toggle span:after {
+
+#nav-toggle span, #nav-toggle span:before, #nav-toggle span:after {
     cursor: pointer;
     border-radius: 1px;
     height: 5px;
@@ -889,21 +884,26 @@ nav ul li ul li a {
     content: '';
     transition: all 300ms ease-in-out;
 }
+
 #nav-toggle span:before {
     top: -10px;
 }
+
 #nav-toggle span:after {
     bottom: -10px;
 }
 #nav-toggle.active span {
     background-color: transparent;
 }
+
 #nav-toggle.active span:before, #nav-toggle.active span:after {
     top: 0;
 }
+
 #nav-toggle.active span:before {
     transform: rotate(45deg);
 }
+
 #nav-toggle.active span:after {
     transform: rotate(-45deg);
 }
@@ -939,13 +939,11 @@ nav ul li ul li a {
     margin-top: 20px;
     margin-right: 2%;
     float: left;
-    text-transform: uppercase;
     font-size: 1.4em;
     color: white !important;
 }
 
-.brand a,
-.brand a:visited {
+.brand a, .brand a:visited {
     color: white;
     text-decoration: none;
 }
@@ -953,7 +951,6 @@ nav ul li ul li a {
 .brand a:hover{
     text-decoration: none;
 }
-
 
 /************** Results *******************/
 .search-result-categories>li>a {
@@ -988,8 +985,7 @@ nav ul li ul li a {
     border-bottom: 1px solid #D8D8D8;
 }
 
-.search-result-item:after,
-.search-result-item:before {
+.search-result-item:after, .search-result-item:before {
     content: " ";
     display: table;
 }
@@ -1068,7 +1064,6 @@ nav ul li ul li a {
     padding-top: 4px !important;
 }
 
-
 /************* Notifications ***************/
 
 .notification-container{
@@ -1087,7 +1082,6 @@ nav ul li ul li a {
     padding-left: 20px;
     padding-right: 20px;
 }
-
 
 .card-body{
     padding: 0.5rem;
@@ -1113,7 +1107,6 @@ td:nth-child(2){
 
 .card-title:before{
     display:inline-block;
-    font-family: 'Font Awesome\ 5 Free';
     font-weight:900;
     font-size: 1.1rem;
     text-align: center;

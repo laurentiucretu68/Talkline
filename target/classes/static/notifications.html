@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Talkline - Notifications</title>
@@ -21,9 +21,9 @@
             <a href="/home">Talkline</a>
         </div>
 
-        <form class="navbar-search" action="/results">
+        <form class="navbar-search" th:action="@{/results}" method="get">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search" name="search">
+                <input type="text" class="form-control" placeholder="Search" name="words" required>
                 <div class="input-group-btn">
                     <button class="btn btn-default" type="submit" style="border: 1px solid white !important;">
                         <i class="glyphicon glyphicon-search" style="color: white !important;"></i>
@@ -38,14 +38,14 @@
             </div>
 
             <ul class="nav-list">
-                <li><a href="/profile"><i class="fa-solid fa-home"></i> My Profile</a></li>
+                <li><a th:href="@{/{email}(email=${user_home.email})}"><i class="fa-solid fa-home"></i> My Profile</a></li>
                 <li><a href="/requests"><i class="fa-solid fa-circle-plus"></i> Friend Requests</a></li>
                 <li><a href="/messages"><i class="fa-solid fa-envelope"></i> Messages</a></li>
                 <li><a href="/notifications"><i class="fa-solid fa-bell"></i> Notifications</a></li>
                 <li>
                     <a href="#">
-                        <img src="img/avatar7.png" class="navbar-profile-img">
-                        Laurentiu Cretu
+                        <img th:src="@{${user_home.profilePicture}}" class="navbar-profile-img">
+                        <span th:text="${user_home.email}"></span>
                     </a>
                     <ul class="nav-dropdown">
                         <li><a href="/settings">Settings</a></li>
